@@ -8,13 +8,14 @@ import sqlite3
 import logging
 import datetime
 
-bot = Bot(config.token)
-dp = Dispatcher(bot, storage=MemoryStorage())
+bot = Bot(config.token) #подключает токен телеграмм бота на нашу программу 
+dp = Dispatcher(bot, storage=MemoryStorage()) 
 storage = MemoryStorage()
+print(storage)
 logging.basicConfig(level=logging.INFO)
 
 
-start_connect = sqlite3.connect('pizza.db')
+start_connect = sqlite3.connect('dodo.db') #откраваем файл с Sqlite3  "dodo.db"
 cur  = start_connect.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -63,7 +64,7 @@ async def start(message : types.Message):
 
             inline_kb = InlineKeyboardMarkup().add(inline_kb1,inline_kb2,inline_kb3)
 
-        await message.answer(f"Ас саламу алейкум ,{message.from_user.full_name}. Вас приветствует администрация DODO PIZZA.\n"
+        await message.answer(f"Здравствуйте ,{message.from_user.full_name}. Вас приветствует администрация DODO PIZZA.\n"
         "Если хотите заказать еду нажмите кнопку",reply_markup=inline_kb)
 
 @dp.callback_query_handler(lambda callbak: callbak.data == 'contact')
